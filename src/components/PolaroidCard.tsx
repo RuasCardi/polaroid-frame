@@ -5,13 +5,15 @@ interface PolaroidCardProps {
     id: string;
     slug: string;
     title: string;
-    coverUrl: string;
-    photoCount?: number;
+    cover_url?: string | null;
+    photo_count?: number | null;
   };
 }
 
 const PolaroidCard = ({ album }: PolaroidCardProps) => {
   const navigate = useNavigate();
+  const cover = album.cover_url || "/placeholder.svg";
+  const photoCount = album.photo_count ?? undefined;
 
   return (
     <div
@@ -21,11 +23,11 @@ const PolaroidCard = ({ album }: PolaroidCardProps) => {
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && navigate(`/galeria/${album.slug}`)}
     >
-      <img src={album.coverUrl} alt={album.title} loading="lazy" />
+      <img src={cover} alt={album.title} loading="lazy" />
       <div className="polaroid-title">{album.title}</div>
-      {album.photoCount !== undefined && (
+      {photoCount !== undefined && (
         <div className="text-center text-sm text-muted-foreground mt-1">
-          {album.photoCount} {album.photoCount === 1 ? "foto" : "fotos"}
+          {photoCount} {photoCount === 1 ? "foto" : "fotos"}
         </div>
       )}
     </div>

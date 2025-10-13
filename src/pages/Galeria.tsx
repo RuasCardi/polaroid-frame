@@ -1,59 +1,57 @@
-import PolaroidCard from "@/components/PolaroidCard";
 import { useEffect, useState } from "react";
+import { supabase, isSupabaseConfigured } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import PolaroidCard from "@/components/PolaroidCard";
 
-// Mock data - will be replaced with real data from backend
-const mockAlbums = [
-  {
-    id: "1",
-    slug: "casamento-ana-joao",
-    title: "Casamento Ana & João",
-    coverUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600",
-    photoCount: 87,
-  },
-  {
-    id: "2",
-    slug: "formatura-medicina-2024",
-    title: "Formatura Medicina 2024",
-    coverUrl: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600",
-    photoCount: 124,
-  },
-  {
-    id: "3",
-    slug: "ensaio-gestante-maria",
-    title: "Ensaio Gestante - Maria",
-    coverUrl: "https://images.unsplash.com/photo-1519689373023-dd07c7988603?w=600",
-    photoCount: 45,
-  },
-  {
-    id: "4",
-    slug: "aniversario-15-anos-julia",
-    title: "15 Anos - Julia",
-    coverUrl: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600",
-    photoCount: 63,
-  },
-  {
-    id: "5",
-    slug: "ensaio-familia-santos",
-    title: "Família Santos",
-    coverUrl: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600",
-    photoCount: 38,
-  },
-  {
-    id: "6",
-    slug: "casamento-pedro-laura",
-    title: "Casamento Pedro & Laura",
-    coverUrl: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600",
-    photoCount: 95,
-  },
-];
+type Album = {
+  id: string;
+  slug: string;
+  title: string;
+  cover_url?: string | null;
+  photo_count?: number | null;
+};
 
 const Galeria = () => {
-  const [albums, setAlbums] = useState(mockAlbums);
-  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+  const [albums, setAlbums] = useState<Album[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: Fetch albums from API
-    // API.get('/albums').then(r => setAlbums(r.data))
+    const fetchAlbums = async () => {
+      setLoading(true);
+        if (!isSupabaseConfigured || !supabase) {
+          console.error("Supabase não configurado. Pulando carregamento de álbuns.");
+          toast({
+            title: "Configuração necessária",
+            description: "Configure a integração com o Supabase para exibir os álbuns.",
+            variant: "destructive",
+          });
+          setAlbums([]);
+          setLoading(false);
+          return;
+        }
+      const { data, error } = await supabase
+        .from("albums")
+        .select("id, slug, title, cover_url, photo_count, created_at")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Erro ao carregar álbuns:", error);
+        toast({
+          title: "Erro ao carregar álbuns",
+          description: error.message,
+          variant: "destructive",
+        });
+        setAlbums([]);
+      } else {
+        setAlbums(data ?? []);
+      }
+
+      setLoading(false);
+    };
+
+    fetchAlbums();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
