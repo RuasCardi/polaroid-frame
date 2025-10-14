@@ -8,6 +8,7 @@ type Album = {
   slug: string;
   title: string;
   cover_url?: string | null;
+  cover_storage_path?: string | null;
   photo_count?: number | null;
 };
 
@@ -32,7 +33,7 @@ const Galeria = () => {
         }
       const { data, error } = await supabase
         .from("albums")
-        .select("id, slug, title, cover_url, photo_count, created_at")
+  .select("id, slug, title, cover_url, cover_storage_path, photo_count, created_at")
         .order("created_at", { ascending: false });
 
       if (error) {
@@ -44,6 +45,15 @@ const Galeria = () => {
         });
         setAlbums([]);
       } else {
+        console.log("📚 ÁLBUNS CARREGADOS NA GALERIA:", data);
+        data?.forEach((album) => {
+          console.log(`📖 Álbum: ${album.title}`, {
+            id: album.id,
+            cover_url: album.cover_url,
+            cover_storage_path: album.cover_storage_path,
+            photo_count: album.photo_count,
+          });
+        });
         setAlbums(data ?? []);
       }
 

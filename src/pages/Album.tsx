@@ -10,6 +10,7 @@ interface AlbumRecord {
   id: string;
   title: string;
   cover_url?: string | null;
+  cover_storage_path?: string | null;
   photo_count?: number | null;
 }
 
@@ -50,7 +51,7 @@ const Album = () => {
 
       const { data: albumData, error: albumError } = await supabase
         .from("albums")
-        .select("id, title, cover_url, photo_count")
+  .select("id, title, cover_url, cover_storage_path, photo_count")
         .eq("slug", slug)
         .maybeSingle();
 

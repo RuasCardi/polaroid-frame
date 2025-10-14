@@ -133,8 +133,8 @@ const Contato = () => {
                   <Mail className="h-6 w-6 text-primary mt-1" />
                   <div>
                     <div className="font-medium">E-mail</div>
-                    <a href="mailto:contato@julianacardinalli.com" className="text-muted-foreground hover:text-primary transition-colors">
-                      contato@julianacardinalli.com
+                    <a href="mailto:juhcardinalli@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
+                      juhcardinalli@gmail.com
                     </a>
                   </div>
                 </div>
@@ -143,8 +143,8 @@ const Contato = () => {
                   <Phone className="h-6 w-6 text-primary mt-1" />
                   <div>
                     <div className="font-medium">Telefone / WhatsApp</div>
-                    <a href="tel:+5511999999999" className="text-muted-foreground hover:text-primary transition-colors">
-                      (11) 99999-9999
+                    <a href="tel:+5519996117683" className="text-muted-foreground hover:text-primary transition-colors">
+                      (19) 996117683
                     </a>
                   </div>
                 </div>
@@ -153,8 +153,8 @@ const Contato = () => {
                   <Instagram className="h-6 w-6 text-primary mt-1" />
                   <div>
                     <div className="font-medium">Instagram</div>
-                    <a href="https://instagram.com/julianacardinalli" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-                      @julianacardinalli
+                    <a href="https://instagram.com/cardimagens" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                      @cardimagens
                     </a>
                   </div>
                 </div>
@@ -164,8 +164,8 @@ const Contato = () => {
                   <div>
                     <div className="font-medium">Localização</div>
                     <div className="text-muted-foreground">
-                      São Paulo, SP<br />
-                      Atendo toda região metropolitana
+                      Niteroi, RJ<br />
+                      Atendo toda região
                     </div>
                   </div>
                 </div>
