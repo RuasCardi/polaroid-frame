@@ -115,7 +115,7 @@
   }
 
   .polaroid-card img {
-    @apply w-full h-64 object-cover rounded-md;
+    @apply w-full h-64 object-contain rounded-md bg-muted/30;
   }
 
   .polaroid-title {
